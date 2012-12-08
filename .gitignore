@@ -1,0 +1,12 @@
+tags
+
+syntax: glob
+
+*.js
+*.py?
+*.so
+*.sw?
+*~
+.DS_Store
+
+syntax: regexp

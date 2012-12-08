@@ -1,0 +1,26 @@
+.SUFFIXES: .coffee .js
+.coffee.js:
+	coffee -b -c $<
+COFFEE = $(wildcard *.coffee)
+JS = $(COFFEE:.coffee=.js)
+
+.SUFFIXES: .haml .tmpl
+.haml.tmpl:
+	haml -f html5 -t ugly $< $@
+HAML = $(wildcard *.haml)
+TMPL = $(HAML:.haml=.tmpl)
+
+.SUFFIXES: .tmpl .html
+.tmpl.html:
+	jinja2 $< data.json > $@
+HTML = $(TMPL:.tmpl=.html)
+$(HTML): $(JS) $(wildcard *.txt)
+
+
+all: $(HTML)
+
+runserver: all
+	python -m SimpleHTTPServer
+
+clean:
+	rm -f $(HTML)

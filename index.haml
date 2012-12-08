@@ -1,0 +1,60 @@
+!!! 5
+%html(lang="ja" ng-app)/
+%meta(charset="utf-8")
+%meta(name="viewport" content="width=device-width, initial-scale=1.0")
+%link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet")
+%script(src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+%script(src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js")
+%script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js")
+%script(src="//www.steamdev.com/zclip/js/jquery.zclip.min.js")
+%title 国連にフクイチ問題解決への介入を嘆願しよう！
+{% import "plea_body.txt" as body %}
+%script
+ var body = '{{ body|replace("'", "&apos;")|replace("\n", "&#13;") }}'.replace(/&#13;/g, "\n");
+ {% include "index.js" %}
+%body/
+
+%div(style="margin:auto 0;")
+ %div(style="text-align: center;")
+  %h1 国連にフクイチ問題解決への介入を嘆願しよう！
+
+.row(style="margin:auto 0;")
+ .span3.hero-unit １．嘆願文書を読んでください
+ .span3.hero-unit ２．“お名前”を入力します
+ .span3.hero-unit ３．メールを送信！
+
+%h3 １．嘆願文書を読んでください
+%p.muted フクイチ問題解決への介入を嘆願する国連事務総長宛の文書です。参考に和訳文を載せているので内容を確認してください。
+.row(style="margin:auto 0;")
+ %pre.span6
+  {% include "plea_subject.txt" %}
+  &#13;
+  &#13;
+  {% include "plea_body.txt" %}{{"{{sign}}"}}&nbsp;
+ %pre.span6
+  {% include "plea_ja.txt" %}{{"{{sign}}"}}&nbsp;
+
+%h3 ２．“お名前”を入力します
+%p.muted 著名欄にお名前を挿し込みますので、入力してください。
+.form-horizontal
+ .control-group
+  .control-label 著名
+  .controls
+   %input#sign(type="text" placeholder="あなたのお名前" ng-model="sign")
+
+%h3 ３．メールを送信！
+%p.muted
+ 嘆願文書をクリップボードにコピーして、「メールを起動」ボタンを押してください。
+ メーラーが起動したら、本文をコピペしてメールを送信してください。
+ 宛先メールアドレス（sg&#64;un.org）と件名は自動的に入力されます。
+.form-horizontal
+ .control-group
+  .controls
+   %a#zclip.btn.btn-large
+    %i.icon-share
+    本文をコピー
+   %a.btn.btn-large.btn-primary(href='mailto:sg@un.org?subject={% include "plea_subject.txt" %}&body=（本文を貼り付けてください）' target="_blank")
+    %i.icon-envelope.icon-white
+    メールを起動
+
+%h3 みんなと共有しよう！
